@@ -13,6 +13,7 @@ datasource db {
 model Thought {
   id          Int       @id @default(autoincrement())
   feelGood    Boolean   @default(true)
+  isIssue     Boolean
   description String
   solutions   Thought[] @relation("RelatedThoughts")
   issues      Thought[] @relation("RelatedThoughts")

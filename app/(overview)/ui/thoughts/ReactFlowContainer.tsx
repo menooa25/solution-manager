@@ -1,78 +1,53 @@
 "use client";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ReactFlow, {
   Background,
   BackgroundVariant,
   Controls,
   Edge,
-  MarkerType,
-  MiniMap,
   Node,
   Panel,
-  Position,
-  addEdge,
-  applyEdgeChanges,
-  applyNodeChanges,
   useEdgesState,
   useNodesState,
 } from "reactflow";
-import Thought from "./Thought";
+import { getAllRelatedThoughts } from "../../lib/actions";
+import { extractNodesEdges, getLayoutedElements } from "../../lib/utils";
 import AddIssue from "./AddIssue";
-
-const initialNodes: Node<any, string | undefined>[] = [
-  {
-    position: { x: 0, y: 0 },
-    id: "1",
-    type: "input",
-    data: { label: "Input Node" },
-    deletable: false,
-  },
-
-  {
-    id: "2",
-    position: { x: 200, y: 150 },
-    deletable: false,
-    type: "thought",
-    data: {},
-  },
-  {
-    id: "3",
-    type: "output",
-    data: { label: "Output Node" },
-    position: { x: 250, y: 250 },
-    deletable: false,
-  },
-];
-
-const initialEdges: Edge<any>[] = [
-  {
-    id: "e1-2",
-    source: "1",
-    targetHandle: "22-t",
-    target: "2",
-    style: {
-      stroke: "#FF0072",
-    },
-    deletable: false,
-  },
-  {
-    id: "e2-3",
-    source: "2",
-    sourceHandle: "22-s",
-    target: "3",
-    deletable: false,
-  },
-];
+import Thought from "./Thought";
+import { initialNodes } from "./testNode";
 
 const ConnectedNodes = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [pureEdgesAndNodes, setPureEdgesAndNodes] = useState<{
+    nodes: Node[];
+    edges: Edge[];
+  }>();
   const nodeTypes = useMemo(
     () => ({
       thought: Thought,
     }),
     []
   );
+  const fetchIssues = async () => {
+    const result = await getAllRelatedThoughts(5);
+    console.log(result);
+    const extracted = extractNodesEdges(result);
+    setPureEdgesAndNodes(extracted);
+    onLayout(extracted.nodes, extracted.edges);
+  };
+  const onLayout = (nodes: Node[], edges: Edge[]) => {
+    const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
+      nodes,
+      edges
+    );
+
+    setNodes([...layoutedNodes]);
+    setEdges([...layoutedEdges]);
+  };
+  useEffect(() => {
+    fetchIssues();
+  }, []);
   return (
     <div className="h-screen w-screen ">
       <ReactFlow
@@ -81,13 +56,16 @@ const ConnectedNodes = () => {
         onEdgesChange={onEdgesChange}
         edges={edges}
         nodeTypes={nodeTypes}
+        proOptions={{ hideAttribution: true }}
         fitView
+        onlyRenderVisibleElements
       >
         <Controls />
         <Background variant={BackgroundVariant.Dots} />
-        <Panel className="w-full" position={"top-center"}>
-          <div className="flex justify-center">
-            <AddIssue />
+        <Panel className="w-full !m-0" position={"top-center"}>
+          <div className="flex justify-center gap-x-2 mt-2 ">
+            <AddIssue type="solution" />
+            <AddIssue type="issue" />
           </div>
         </Panel>
       </ReactFlow>
