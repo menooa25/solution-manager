@@ -6,6 +6,8 @@ import ReactFlow, {
   MarkerType,
   MiniMap,
   Node,
+  Panel,
+  Position,
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
@@ -13,6 +15,7 @@ import ReactFlow, {
   useNodesState,
 } from "reactflow";
 import Thought from "./Thought";
+import AddIssue from "./AddIssue";
 
 const initialNodes: Node<any, string | undefined>[] = [
   {
@@ -79,6 +82,9 @@ const ConnectedNodes = () => {
         fitView
       >
         <Controls />
+        <Panel position={"top-right"}>
+          <AddIssue />
+        </Panel>
       </ReactFlow>
     </div>
   );

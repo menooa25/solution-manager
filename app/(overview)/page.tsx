@@ -1,4 +1,4 @@
-import ConnectedNodes from "./thoughts/ReactFlowContainer";
+import ConnectedNodes from "./ui/thoughts/ReactFlowContainer";
 
 export default function Home() {
   return (
