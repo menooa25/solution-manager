@@ -9,12 +9,19 @@ interface Props {
   };
 }
 const Thought = ({ data }: Props) => {
-  console.log(data);
   return (
     <div>
-      <Handle position={Position.Top} type="target" />
-      <button className="btn btn-xs">{data.description}</button>
-      <Handle position={Position.Bottom} type="source" />
+      <Handle
+        position={Position.Top}
+        className="!bg-transparent  !top-[1px] !border-none"
+        type="target"
+      />
+      <button className="btn  btn-xs">{data.description}</button>
+      <Handle
+        className="!bg-transparent  !bottom-[1px] !border-none"
+        position={Position.Bottom}
+        type="source"
+      />
     </div>
   );
 };
