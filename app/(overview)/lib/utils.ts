@@ -54,7 +54,7 @@ export const extractNodesEdges = (thoughts: FetchedTypes) => {
       nodes.push({
         id: thought.id.toString(),
         type: "thought",
-        data: { label: thought.description },
+        data: thought,
         position: { x: 0, y: 0 },
       });
       if (id) {
