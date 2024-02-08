@@ -1,6 +1,8 @@
 "use client";
 import { useCallback, useMemo, useState } from "react";
 import ReactFlow, {
+  Background,
+  BackgroundVariant,
   Controls,
   Edge,
   MarkerType,
@@ -82,8 +84,11 @@ const ConnectedNodes = () => {
         fitView
       >
         <Controls />
-        <Panel position={"top-right"}>
-          <AddIssue />
+        <Background variant={BackgroundVariant.Dots} />
+        <Panel className="w-full" position={"top-center"}>
+          <div className="flex justify-center">
+            <AddIssue />
+          </div>
         </Panel>
       </ReactFlow>
     </div>
