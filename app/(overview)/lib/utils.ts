@@ -53,7 +53,7 @@ export const extractNodesEdges = (thoughts: FetchedTypes) => {
     if (thought?.id) {
       nodes.push({
         id: thought.id.toString(),
-        type: "default",
+        type: "thought",
         data: { label: thought.description },
         position: { x: 0, y: 0 },
       });
@@ -63,7 +63,6 @@ export const extractNodesEdges = (thoughts: FetchedTypes) => {
             relate === "parent" ? `e${id}${thought.id}` : `e${thought.id}${id}`,
           source: relate === "parent" ? id.toString() : thought.id.toString(),
           target: relate === "parent" ? thought.id.toString() : id.toString(),
-          type: "smoothstep",
         });
       }
 

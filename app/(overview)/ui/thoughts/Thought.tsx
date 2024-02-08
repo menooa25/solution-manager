@@ -1,11 +1,18 @@
+"use client";
 import { Handle, Position } from "reactflow";
-
-const Thought = () => {
+interface Props {
+  id: string;
+  data: {
+    label: string;
+  };
+}
+// const Thought = (props) => {
+const Thought = ({ id, data: { label } }: Props) => {
   return (
     <div>
-      <Handle id="22-t" position={Position.Top} type="target" />
-      <button className="btn btn-xs">im button</button>
-      <Handle id="22-s" position={Position.Bottom} type="source" />
+      <Handle className="h-0 w-0" position={Position.Top} type="target" />
+      <button className="btn btn-xs">{label}</button>
+      <Handle position={Position.Bottom} type="source" />
     </div>
   );
 };

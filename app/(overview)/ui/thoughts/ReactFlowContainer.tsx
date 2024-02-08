@@ -14,7 +14,6 @@ import { getAllRelatedThoughts } from "../../lib/actions";
 import { extractNodesEdges, getLayoutedElements } from "../../lib/utils";
 import AddIssue from "./AddIssue";
 import Thought from "./Thought";
-import { initialNodes } from "./testNode";
 
 const ConnectedNodes = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -31,7 +30,6 @@ const ConnectedNodes = () => {
   );
   const fetchIssues = async () => {
     const result = await getAllRelatedThoughts(5);
-    console.log(result);
     const extracted = extractNodesEdges(result);
     setPureEdgesAndNodes(extracted);
     onLayout(extracted.nodes, extracted.edges);
