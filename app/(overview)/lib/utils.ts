@@ -63,6 +63,7 @@ export const extractNodesEdges = (thoughts: FetchedTypes) => {
             relate === "parent" ? `e${id}${thought.id}` : `e${thought.id}${id}`,
           source: relate === "parent" ? id.toString() : thought.id.toString(),
           target: relate === "parent" ? thought.id.toString() : id.toString(),
+          style: { stroke: !thought.feelGood ? "#e93f33" : "#45aeee" },
         });
       }
 
