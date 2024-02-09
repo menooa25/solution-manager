@@ -12,8 +12,9 @@ import ReactFlow, {
 } from "reactflow";
 import { getAllRelatedThoughts } from "../../lib/actions";
 import { extractNodesEdges, getLayoutedElements } from "../../lib/utils";
-import AddIssue from "./AddIssue";
+import AddThought from "./panelButtons/AddThought";
 import Thought from "./Thought";
+import PanelButtonsContainer from "./panelButtons/PanelButtonsContainer";
 
 const ConnectedNodes = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -61,10 +62,7 @@ const ConnectedNodes = () => {
         <Controls />
         <Background variant={BackgroundVariant.Dots} />
         <Panel className="w-full !m-0" position={"top-center"}>
-          <div className="flex justify-center gap-x-2 mt-2 ">
-            <AddIssue type="solution" />
-            <AddIssue type="issue" />
-          </div>
+          <PanelButtonsContainer />
         </Panel>
       </ReactFlow>
     </div>

@@ -1,6 +1,7 @@
 "use server";
 import { getUserId } from "@/app/lib/actions";
 import prisma from "@/prisma/db";
+import { Thought } from "@prisma/client";
 import { Sql } from "@prisma/client/runtime/library";
 
 export const createThought = async (
@@ -18,6 +19,42 @@ export const createThought = async (
       userId,
     },
   });
+};
+export const createRelatedThought = async (
+  id: number,
+  isIssue: boolean,
+  description: string,
+  feelGood: boolean,
+  relatedType: "solution" | "issue"
+) => {
+  const userId = await getUserId();
+  if (!userId) return null;
+  let related = await prisma.thought.create({
+    data: {
+      description,
+      isIssue,
+      feelGood,
+      userId,
+    },
+  });
+  if (relatedType === "issue") {
+    await prisma.thought.update({
+      where: { id },
+      data: {
+        issues: {
+          connect: related,
+        },
+      },
+    });
+  } else
+    await prisma.thought.update({
+      where: { id },
+      data: {
+        solutions: {
+          connect: related,
+        },
+      },
+    });
 };
 
 export const getIssuesWithSolution = async () => {

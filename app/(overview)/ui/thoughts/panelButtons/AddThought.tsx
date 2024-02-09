@@ -4,7 +4,7 @@ import useModal from "@/app/hooks/useModal";
 import Modal from "@/app/ui/Modal";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { createThought } from "../../lib/actions";
+import { createThought } from "../../../lib/actions";
 import { direction } from "direction";
 
 type Inputs = {
@@ -15,7 +15,7 @@ interface Props {
   type: "issue" | "solution";
 }
 
-const AddIssue = ({ type }: Props) => {
+const AddThought = ({ type }: Props) => {
   const { modalId, openModal, closeModal } = useModal();
   const [loading, setLoading] = useState(false);
   const {
@@ -107,4 +107,4 @@ const AddIssue = ({ type }: Props) => {
   );
 };
 
-export default AddIssue;
+export default AddThought;
