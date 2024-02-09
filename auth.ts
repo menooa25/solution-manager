@@ -6,7 +6,7 @@ import type { NextAuthConfig } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/prisma/db";
 export const config = {
-  adapter: PrismaAdapter(prisma),
+  adapter:  PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   redirectProxyUrl: process.env.AUTH_REDIRECT_PROXY_URL || undefined,
   providers: [

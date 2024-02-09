@@ -47,7 +47,7 @@ const Thought = ({ data }: Props) => {
       </NodeToolbar>
       <NodeToolbar position={Position.Left}>
         <div className="-mr-3">
-          <RemoveThought id={data.id} />
+          <RemoveThought description={data.description} id={data.id} />
         </div>
       </NodeToolbar>
       <Handle

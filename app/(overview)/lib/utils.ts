@@ -1,7 +1,6 @@
 import { Edge, Node, Position } from "reactflow";
 import dagre from "@dagrejs/dagre";
 import { FetchedTypes } from "./types";
-import { Thought } from "@prisma/client";
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 

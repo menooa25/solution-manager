@@ -1,8 +1,6 @@
 "use server";
 import { getUserId } from "@/app/lib/actions";
 import prisma from "@/prisma/db";
-import { Thought } from "@prisma/client";
-import { Sql } from "@prisma/client/runtime/library";
 
 export const createThought = async (
   isIssue: boolean,
@@ -71,9 +69,10 @@ export const getIssuesWithSolution = async () => {
 };
 
 export const getAllRelatedThoughts = async (id: number) => {
-  // Define a recursive function to traverse through related thoughts
+  const userId = await getUserId();
+  if (!userId) return [];
   return await prisma.thought.findUnique({
-    where: { id },
+    where: { id, userId },
     include: {
       issues: {
         include: {
@@ -92,5 +91,13 @@ export const getAllRelatedThoughts = async (id: number) => {
         },
       },
     },
+  });
+};
+
+export const deleteThought = async (id: number) => {
+  const userId = await getUserId();
+  if (!userId) return [];
+  return await prisma.thought.delete({
+    where: { id, userId },
   });
 };
