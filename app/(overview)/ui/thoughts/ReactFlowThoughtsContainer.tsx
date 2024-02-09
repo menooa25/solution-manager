@@ -41,7 +41,7 @@ const ReactFlowThoughtsContainer = () => {
         onlyRenderVisibleElements
         zoomOnDoubleClick
       >
-        <Controls />
+        <Controls className="!mb-16 sm:!mb-4" />
         <Background variant={BackgroundVariant.Dots} />
         <Panel className="w-full !m-0" position={"top-center"}>
           <PanelButtonsContainer />
