@@ -38,7 +38,7 @@ const AddThought = ({ type }: Props) => {
 
   return (
     <>
-      <button onClick={openModal} className="btn btn-sm">
+      <button onClick={openModal} className="btn btn-xs">
         ثبت {type === "issue" ? "مسله" : "راه حل"}
       </button>
       <Modal id={modalId}>

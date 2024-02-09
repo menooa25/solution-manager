@@ -1,6 +1,7 @@
 "use client";
 
 import { Thought } from "@prisma/client";
+import { LuRadar } from "react-icons/lu";
 import AddRelatedThought from "./AddRelatedThought";
 
 interface Props {

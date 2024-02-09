@@ -13,7 +13,7 @@ import ReactFlow, {
 import { getAllRelatedThoughts } from "../../lib/actions";
 import { extractNodesEdges, getLayoutedElements } from "../../lib/utils";
 import AddThought from "./panelButtons/AddThought";
-import Thought from "./Thought";
+import Thought from "./singleThought/Thought";
 import PanelButtonsContainer from "./panelButtons/PanelButtonsContainer";
 import { ThoughtContext } from "./ReactFlowThoughtsProvider";
 

@@ -11,7 +11,7 @@ import { direction } from "direction";
 import { useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ThoughtContext } from "../ReactFlowThoughtsProvider";
-import Thought from "../Thought";
+import Thought from "../singleThought/Thought";
 import { useUpdateNodeInternals } from "reactflow";
 
 type Inputs = {

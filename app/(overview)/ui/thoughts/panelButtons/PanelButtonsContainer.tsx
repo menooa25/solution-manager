@@ -10,7 +10,7 @@ const PanelButtonsContainer = () => {
     <div className="flex justify-center gap-x-2 mt-2 ">
       <AddThought type="solution" />
       <AddThought type="issue" />
-      <button onClick={reLayout} className="btn btn-sm">
+      <button onClick={reLayout} className="btn btn-xs">
         مرتب سازی
       </button>
     </div>

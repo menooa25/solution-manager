@@ -1,10 +1,16 @@
 "use client";
 
 import {
+  Dispatch,
+  PropsWithChildren,
+  SetStateAction,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
+import {
   Edge,
-  EdgeChange,
   Node,
-  NodeChange,
   OnEdgesChange,
   OnNodesChange,
   useEdgesState,
@@ -12,14 +18,6 @@ import {
 } from "reactflow";
 import { getAllRelatedThoughts } from "../../lib/actions";
 import { extractNodesEdges, getLayoutedElements } from "../../lib/utils";
-import {
-  Dispatch,
-  PropsWithChildren,
-  SetStateAction,
-  createContext,
-  useContext,
-  useEffect,
-} from "react";
 
 interface ContextType {
   nodes: Node<any, string | undefined>[];
@@ -30,6 +28,7 @@ interface ContextType {
   setEdges: Dispatch<SetStateAction<Edge<any>[]>>;
   fetchIssues: (id: number) => Promise<any>;
   reLayout: () => void;
+  mainNodeId: string;
 }
 export const ThoughtContext = createContext<ContextType>({
   edges: [],
@@ -40,12 +39,13 @@ export const ThoughtContext = createContext<ContextType>({
   setNodes: Object as any,
   fetchIssues: async (id) => {},
   reLayout: () => {},
+  mainNodeId: "0",
 });
 
 const ReactFlowThoughtsProvider = ({ children }: PropsWithChildren) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-
+  const [mainNodeId, setMainNodeId] = useState("0");
   const onLayout = (nodes: Node[], edges: Edge[]) => {
     const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
       nodes,
@@ -61,10 +61,14 @@ const ReactFlowThoughtsProvider = ({ children }: PropsWithChildren) => {
     const result = await getAllRelatedThoughts(id);
     const extracted = extractNodesEdges(result);
     onLayout(extracted.nodes, extracted.edges);
+    setMainNodeId(id.toString());
   };
   useEffect(() => {
     const lastFetchId = +(localStorage.getItem("lastFetchId") ?? "");
-    if (lastFetchId) fetchIssues(lastFetchId);
+    if (lastFetchId) {
+      setMainNodeId(lastFetchId.toString());
+      fetchIssues(lastFetchId);
+    }
   }, []);
   return (
     <ThoughtContext.Provider
@@ -77,6 +81,7 @@ const ReactFlowThoughtsProvider = ({ children }: PropsWithChildren) => {
         setEdges,
         setNodes,
         reLayout,
+        mainNodeId,
       }}
     >
       {children}
