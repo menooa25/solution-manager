@@ -8,8 +8,11 @@ import { IoMdAdd } from "react-icons/io";
 import useModal from "@/app/hooks/useModal";
 import Modal from "@/app/ui/Modal";
 import { direction } from "direction";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { ThoughtContext } from "../ReactFlowThoughtsProvider";
+import Thought from "../Thought";
+import { useUpdateNodeInternals } from "reactflow";
 
 type Inputs = {
   description: string;
@@ -18,12 +21,13 @@ type Inputs = {
 interface Props {
   type: "issue" | "solution";
   id: number;
+  currentThoughtDescription: string;
 }
 
-const AddRelatedThought = ({ type, id }: Props) => {
+const AddRelatedThought = ({ type, id, currentThoughtDescription }: Props) => {
   const { modalId, openModal, closeModal } = useModal();
   const [loading, setLoading] = useState(false);
-
+  const { fetchIssues } = useContext(ThoughtContext);
   const {
     register,
     handleSubmit,
@@ -42,6 +46,7 @@ const AddRelatedThought = ({ type, id }: Props) => {
     );
     setLoading(false);
     closeModal();
+    await fetchIssues(id);
   };
 
   return (
@@ -55,6 +60,12 @@ const AddRelatedThought = ({ type, id }: Props) => {
       </button>
       <Modal id={modalId}>
         <form onSubmit={handleSubmit(onSubmit)} dir="rtl">
+          <span
+            dir={direction(currentThoughtDescription)}
+            className="block text-center font-bold "
+          >
+            {currentThoughtDescription}
+          </span>
           <label className="form-control w-full ">
             <div className="label pb-1">
               <span className="label-text-alt font-bold text-sm ">

@@ -1,9 +1,12 @@
-import ConnectedNodes from "./ui/thoughts/ReactFlowContainer";
+import ReactFlowThoughtsContainer from "./ui/thoughts/ReactFlowThoughtsContainer";
+import ReactFlowThoughtsProvider from "./ui/thoughts/ReactFlowThoughtsProvider";
 
 export default function Home() {
   return (
     <main>
-      <ConnectedNodes />
+      <ReactFlowThoughtsProvider>
+        <ReactFlowThoughtsContainer />
+      </ReactFlowThoughtsProvider>
     </main>
   );
 }

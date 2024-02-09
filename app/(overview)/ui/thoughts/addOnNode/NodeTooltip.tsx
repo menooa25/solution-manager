@@ -9,8 +9,16 @@ interface Props {
 const NodeTooltip = ({ thought }: Props) => {
   return (
     <div className="flex flex-col items-end gap-y-1 ">
-      <AddRelatedThought id={thought.id} type="issue" />
-      <AddRelatedThought id={thought.id} type="solution" />
+      <AddRelatedThought
+        currentThoughtDescription={thought.description}
+        id={thought.id}
+        type="issue"
+      />
+      <AddRelatedThought
+        currentThoughtDescription={thought.description}
+        id={thought.id}
+        type="solution"
+      />
     </div>
   );
 };

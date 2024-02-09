@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import ReactFlow, {
   Background,
   BackgroundVariant,
@@ -15,38 +15,19 @@ import { extractNodesEdges, getLayoutedElements } from "../../lib/utils";
 import AddThought from "./panelButtons/AddThought";
 import Thought from "./Thought";
 import PanelButtonsContainer from "./panelButtons/PanelButtonsContainer";
+import { ThoughtContext } from "./ReactFlowThoughtsProvider";
 
-const ConnectedNodes = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const [pureEdgesAndNodes, setPureEdgesAndNodes] = useState<{
-    nodes: Node[];
-    edges: Edge[];
-  }>();
+const ReactFlowThoughtsContainer = () => {
+  const { edges, setEdges, onEdgesChange, nodes, setNodes, onNodesChange } =
+    useContext(ThoughtContext);
+
   const nodeTypes = useMemo(
     () => ({
       thought: Thought,
     }),
     []
   );
-  const fetchIssues = async () => {
-    const result = await getAllRelatedThoughts(5);
-    const extracted = extractNodesEdges(result);
-    setPureEdgesAndNodes(extracted);
-    onLayout(extracted.nodes, extracted.edges);
-  };
-  const onLayout = (nodes: Node[], edges: Edge[]) => {
-    const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
-      nodes,
-      edges
-    );
 
-    setNodes([...layoutedNodes]);
-    setEdges([...layoutedEdges]);
-  };
-  useEffect(() => {
-    fetchIssues();
-  }, []);
   return (
     <div className="h-screen w-screen ">
       <ReactFlow
@@ -69,4 +50,4 @@ const ConnectedNodes = () => {
   );
 };
 
-export default ConnectedNodes;
+export default ReactFlowThoughtsContainer;
