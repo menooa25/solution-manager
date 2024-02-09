@@ -18,7 +18,7 @@ import PanelButtonsContainer from "./panelButtons/PanelButtonsContainer";
 import { ThoughtContext } from "./ReactFlowThoughtsProvider";
 
 const ReactFlowThoughtsContainer = () => {
-  const { edges, setEdges, onEdgesChange, nodes, setNodes, onNodesChange } =
+  const { edges, onEdgesChange, nodes, onNodesChange } =
     useContext(ThoughtContext);
 
   const nodeTypes = useMemo(
@@ -39,6 +39,7 @@ const ReactFlowThoughtsContainer = () => {
         proOptions={{ hideAttribution: true }}
         fitView
         onlyRenderVisibleElements
+        zoomOnDoubleClick
       >
         <Controls />
         <Background variant={BackgroundVariant.Dots} />

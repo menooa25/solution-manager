@@ -1,12 +1,12 @@
 "use client";
 import { Thought as ThoughtType } from "@prisma/client";
 import clsx from "clsx";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Handle, NodeToolbar, Position } from "reactflow";
-import NodeTooltip from "../addOnNode/NodeTooltip";
 import { ThoughtContext } from "../ReactFlowThoughtsProvider";
-import { LuRadar } from "react-icons/lu";
-import LocateCloseThoughts from "./LocateCloseThoughts";
+import AddRelatedThought from "../tooltip/AddRelatedThought";
+import LocateCloseThoughts from "../tooltip/LocateCloseThoughts";
+import RemoveThought from "../tooltip/RemoveThought";
 interface Props {
   id: string;
   data: ThoughtType & {
@@ -16,17 +16,38 @@ interface Props {
 }
 const Thought = ({ data }: Props) => {
   const { mainNodeId } = useContext(ThoughtContext);
+
   const btnClass = clsx("btn btn-sm", {
     "!btn-neutral": +mainNodeId === data.id,
   });
   return (
     <div>
       <NodeToolbar>
-        <NodeTooltip thought={data} />
+        <div className="-mb-1">
+          <AddRelatedThought
+            currentThoughtDescription={data.description}
+            id={data.id}
+            type="issue"
+          />
+        </div>
+      </NodeToolbar>
+      <NodeToolbar position={Position.Bottom}>
+        <div className="-mt-1">
+          <AddRelatedThought
+            currentThoughtDescription={data.description}
+            id={data.id}
+            type="solution"
+          />
+        </div>
       </NodeToolbar>
       <NodeToolbar position={Position.Right}>
         <div className="-ml-3">
           <LocateCloseThoughts id={data.id} />
+        </div>
+      </NodeToolbar>
+      <NodeToolbar position={Position.Left}>
+        <div className="-mr-3">
+          <RemoveThought id={data.id} />
         </div>
       </NodeToolbar>
       <Handle

@@ -9,6 +9,7 @@ interface Props {
 }
 const LocateCloseThoughts = ({ id }: Props) => {
   const { fetchIssues } = useContext(ThoughtContext);
+
   return (
     <button
       onClick={() => fetchIssues(id)}

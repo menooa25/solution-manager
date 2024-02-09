@@ -55,7 +55,9 @@ const ReactFlowThoughtsProvider = ({ children }: PropsWithChildren) => {
     setNodes([...layoutedNodes]);
     setEdges([...layoutedEdges]);
   };
-  const reLayout = () => onLayout(nodes, edges);
+  const reLayout = () => {
+    onLayout(nodes, edges);
+  };
   const fetchIssues = async (id: number) => {
     localStorage.setItem("lastFetchId", id.toString());
     const result = await getAllRelatedThoughts(id);
