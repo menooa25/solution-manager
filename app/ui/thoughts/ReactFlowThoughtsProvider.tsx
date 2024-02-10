@@ -60,7 +60,7 @@ const ReactFlowThoughtsProvider = ({ children }: PropsWithChildren) => {
     setEdges([...layoutedEdges]);
   };
   const reLayout = () => {
-    onLayout(nodes, edges);
+    if (nodes.length) onLayout(nodes, edges);
   };
   const fetchIssues = useCallback(async (id: number) => {
     localStorage.setItem("lastFetchId", id.toString());

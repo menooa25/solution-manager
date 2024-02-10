@@ -1,6 +1,7 @@
 "use client";
 
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const Account = () => {
@@ -13,7 +14,7 @@ const Account = () => {
   }, [image]);
 
   return (
-    <div className="flex flex-col h-full justify-between w-full  px-3 sm:pt-32 sm:gap-y-10 items-center">
+    <div className="flex flex-col h-full justify-between w-full  px-3 pt-10 sm:pt-32 gap-y-10 items-center">
       {image && !hideImage && (
         <div className="avatar w-full flex justify-center ">
           <div className="w-24 rounded-full">
@@ -31,12 +32,20 @@ const Account = () => {
           {data?.user?.name} عزیز خوش آمدید 😊
         </p>
       )}
-      <button
-        className="btn btn-sm w-full sm:w-52 mt-10"
-        onClick={() => signOut()}
-      >
-        خروج از حساب کاربری
-      </button>
+      <div className="mt-10 flex gap-x-2 justify-center w-full">
+        <Link href={"/"} className="btn btn-sm btn-primary sm:w-52 ">
+          برگشت به صفحه اصلی
+        </Link>{" "}
+        <button
+          className="btn btn-sm  sm:w-52 "
+          onClick={() => {
+            signOut();
+            localStorage.clear();
+          }}
+        >
+          خروج از حساب کاربری
+        </button>
+      </div>
     </div>
   );
 };
