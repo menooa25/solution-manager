@@ -8,7 +8,7 @@ const ReLayout = () => {
         window.location.reload();
       }}
     >
-      <button className="sm:hidden btn btn-xs p-0 btn-ghost">
+      <button className="sm:hidden btn btn-xs  btn-ghost p-0 hover:bg-transparent">
         <FiLayout size={30} />
       </button>
       <button className="hidden sm:block btn btn-xs">مرتب سازی</button>

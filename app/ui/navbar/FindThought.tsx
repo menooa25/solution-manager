@@ -2,7 +2,7 @@
 
 import useModal from "@/app/hooks/useModal";
 import Modal from "@/app/ui/Modal";
-import SearchThought from "../searchThought/SearchThought";
+import SearchThought from "../thoughts/searchThought/SearchThought";
 
 const FindThought = () => {
   const { openModal, closeModal, modalId } = useModal();
@@ -15,9 +15,7 @@ const FindThought = () => {
         جستجو
       </button>
       <Modal id={modalId}>
-        <div>
-          <SearchThought callBackFunc={closeModal} />
-        </div>
+        <SearchThought callBackFunc={closeModal} />
       </Modal>
     </>
   );

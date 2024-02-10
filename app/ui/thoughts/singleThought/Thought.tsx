@@ -3,7 +3,7 @@ import { Thought as ThoughtType } from "@prisma/client";
 import clsx from "clsx";
 import { useContext } from "react";
 import { Handle, NodeToolbar, Position } from "reactflow";
-import { ThoughtContext } from "../ReactFlowThoughtsProvider";
+import { ThoughtNodeContext } from "../ThoughtsNodeProvider";
 import AddRelatedThought from "../tooltip/AddRelatedThought";
 import LocateCloseThoughts from "../tooltip/LocateCloseThoughts";
 import RemoveThought from "../tooltip/RemoveThought";
@@ -15,7 +15,7 @@ interface Props {
   };
 }
 const Thought = ({ data }: Props) => {
-  const { mainNodeId } = useContext(ThoughtContext);
+  const { mainNodeId } = useContext(ThoughtNodeContext);
 
   const btnClass = clsx("btn btn-sm", {
     "!btn-neutral": +mainNodeId === data.id,

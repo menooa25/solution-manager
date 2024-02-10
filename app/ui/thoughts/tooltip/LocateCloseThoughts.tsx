@@ -2,13 +2,13 @@
 
 import { useContext } from "react";
 import { LuRadar } from "react-icons/lu";
-import { ThoughtContext } from "../ReactFlowThoughtsProvider";
+import { ThoughtNodeContext } from "../ThoughtsNodeProvider";
 
 interface Props {
   id: number;
 }
 const LocateCloseThoughts = ({ id }: Props) => {
-  const { fetchIssues } = useContext(ThoughtContext);
+  const { fetchIssues } = useContext(ThoughtNodeContext);
 
   return (
     <button

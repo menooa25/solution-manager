@@ -10,7 +10,7 @@ import Modal from "@/app/ui/Modal";
 import { direction } from "direction";
 import { useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ThoughtContext } from "../ReactFlowThoughtsProvider";
+import { ThoughtNodeContext } from "../ThoughtsNodeProvider";
 import Thought from "../singleThought/Thought";
 import { useUpdateNodeInternals } from "reactflow";
 
@@ -27,7 +27,7 @@ interface Props {
 const AddRelatedThought = ({ type, id, currentThoughtDescription }: Props) => {
   const { modalId, openModal, closeModal } = useModal();
   const [loading, setLoading] = useState(false);
-  const { fetchIssues, reLayout } = useContext(ThoughtContext);
+  const { fetchIssues, reLayout } = useContext(ThoughtNodeContext);
   const {
     register,
     handleSubmit,

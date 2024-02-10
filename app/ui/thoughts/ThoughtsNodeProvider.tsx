@@ -34,7 +34,7 @@ interface ContextType {
   reLayout: () => void;
   mainNodeId: string;
 }
-export const ThoughtContext = createContext<ContextType>({
+export const ThoughtNodeContext = createContext<ContextType>({
   edges: [],
   nodes: [],
   setEdges: Object as any,
@@ -46,7 +46,7 @@ export const ThoughtContext = createContext<ContextType>({
   mainNodeId: "0",
 });
 
-const ReactFlowThoughtsProvider = ({ children }: PropsWithChildren) => {
+const ThoughtsNodeProvider = ({ children }: PropsWithChildren) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [mainNodeId, setMainNodeId] = useState("0");
@@ -77,7 +77,7 @@ const ReactFlowThoughtsProvider = ({ children }: PropsWithChildren) => {
     }
   }, []);
   return (
-    <ThoughtContext.Provider
+    <ThoughtNodeContext.Provider
       value={{
         nodes,
         onNodesChange,
@@ -91,8 +91,8 @@ const ReactFlowThoughtsProvider = ({ children }: PropsWithChildren) => {
       }}
     >
       {children}
-    </ThoughtContext.Provider>
+    </ThoughtNodeContext.Provider>
   );
 };
 
-export default ReactFlowThoughtsProvider;
+export default ThoughtsNodeProvider;

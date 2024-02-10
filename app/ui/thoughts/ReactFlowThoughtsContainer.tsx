@@ -6,13 +6,13 @@ import ReactFlow, {
   Controls,
   Panel,
 } from "reactflow";
-import { ThoughtContext } from "./ReactFlowThoughtsProvider";
-import PanelButtonsContainer from "./panelButtons/PanelButtonsContainer";
+import { ThoughtNodeContext } from "./ThoughtsNodeProvider";
+import PanelButtonsContainer from "../navbar/PanelButtonsContainer";
 import Thought from "./singleThought/Thought";
 
 const ReactFlowThoughtsContainer = () => {
   const { edges, onEdgesChange, nodes, onNodesChange } =
-    useContext(ThoughtContext);
+    useContext(ThoughtNodeContext);
 
   const nodeTypes = useMemo(
     () => ({
@@ -36,9 +36,9 @@ const ReactFlowThoughtsContainer = () => {
       >
         <Controls className="!mb-16 sm:!mb-4" />
         <Background variant={BackgroundVariant.Dots} />
-        <Panel className="w-full !m-0" position={"top-center"}>
+        {/* <Panel className="w-full !m-0" position={"top-center"}>
           <PanelButtonsContainer />
-        </Panel>
+        </Panel> */}
       </ReactFlow>
     </div>
   );

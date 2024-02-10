@@ -1,12 +1,12 @@
 import ReactFlowThoughtsContainer from "../ui/thoughts/ReactFlowThoughtsContainer";
-import ReactFlowThoughtsProvider from "../ui/thoughts/ReactFlowThoughtsProvider";
+import ThoughtsNodeProvider from "../ui/thoughts/ThoughtsNodeProvider";
 
 export default function Home() {
   return (
     <main>
-      <ReactFlowThoughtsProvider>
+      <ThoughtsNodeProvider>
         <ReactFlowThoughtsContainer />
-      </ReactFlowThoughtsProvider>
+      </ThoughtsNodeProvider>
     </main>
   );
 }

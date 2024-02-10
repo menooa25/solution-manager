@@ -4,7 +4,7 @@ import useModal from "@/app/hooks/useModal";
 import Modal from "@/app/ui/Modal";
 import { useContext, useState } from "react";
 import { TbTrashX } from "react-icons/tb";
-import { ThoughtContext } from "../ReactFlowThoughtsProvider";
+import { ThoughtNodeContext } from "../ThoughtsNodeProvider";
 interface Props {
   id: number;
   description: string;
@@ -13,7 +13,7 @@ interface Props {
 const RemoveThought = ({ id, description }: Props) => {
   const { openModal, modalId, closeModal } = useModal();
   const [loading, setLoading] = useState(false);
-  const { fetchIssues, reLayout } = useContext(ThoughtContext);
+  const { fetchIssues, reLayout } = useContext(ThoughtNodeContext);
   const onDelete = async () => {
     setLoading(true);
     await deleteThought(id);

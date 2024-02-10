@@ -2,7 +2,7 @@ import { findThoughts } from "@/app/lib/thoughts/actions";
 import { Thought } from "@prisma/client";
 import { direction } from "direction";
 import React, { useContext, useEffect, useState } from "react";
-import { ThoughtContext } from "../ReactFlowThoughtsProvider";
+import { ThoughtNodeContext } from "../ThoughtsNodeProvider";
 
 interface Props {
   callBackFunc?: () => void;
@@ -10,7 +10,7 @@ interface Props {
 const SearchThought = ({ callBackFunc }: Props) => {
   const [searchText, setSearchText] = useState("");
   const [thoughts, setThoughts] = useState<Thought[]>([]);
-  const { fetchIssues, reLayout } = useContext(ThoughtContext);
+  const { fetchIssues, reLayout } = useContext(ThoughtNodeContext);
   const fetchContainedThoughts = async () => {
     if (searchText) setThoughts(await findThoughts(searchText));
     reLayout();

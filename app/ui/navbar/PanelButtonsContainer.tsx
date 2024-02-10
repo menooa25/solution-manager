@@ -8,7 +8,7 @@ import ReLayout from "./ReLayout";
 
 const PanelButtonsContainer = () => {
   return (
-    <>
+    <div className="w-screen absolute z-10">
       <div className="hidden  sm:flex justify-center gap-x-2 mt-2 ">
         <AccountLink />
         <FindThought />
@@ -46,7 +46,7 @@ const PanelButtonsContainer = () => {
           <ReLayout />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
