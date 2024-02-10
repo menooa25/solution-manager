@@ -5,6 +5,7 @@ import {
   PropsWithChildren,
   SetStateAction,
   createContext,
+  useCallback,
   useEffect,
   useState,
 } from "react";
@@ -58,13 +59,13 @@ const ReactFlowThoughtsProvider = ({ children }: PropsWithChildren) => {
   const reLayout = () => {
     onLayout(nodes, edges);
   };
-  const fetchIssues = async (id: number) => {
+  const fetchIssues = useCallback(async (id: number) => {
     localStorage.setItem("lastFetchId", id.toString());
     const result = await getAllRelatedThoughts(id);
     const extracted = extractNodesEdges(result);
     onLayout(extracted.nodes, extracted.edges);
     setMainNodeId(id.toString());
-  };
+  }, []);
   useEffect(() => {
     const lastFetchId = +(localStorage.getItem("lastFetchId") ?? "");
     if (lastFetchId) {
