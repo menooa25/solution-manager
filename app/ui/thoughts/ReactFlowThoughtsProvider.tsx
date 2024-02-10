@@ -17,8 +17,11 @@ import {
   useEdgesState,
   useNodesState,
 } from "reactflow";
-import { getAllRelatedThoughts } from "../../lib/actions";
-import { extractNodesEdges, getLayoutedElements } from "../../lib/utils";
+import { getAllRelatedThoughts } from "../../lib/thoughts/actions";
+import {
+  extractNodesEdges,
+  getLayoutedElements,
+} from "../../lib/thoughts/utils";
 
 interface ContextType {
   nodes: Node<any, string | undefined>[];

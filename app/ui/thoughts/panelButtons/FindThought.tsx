@@ -8,7 +8,10 @@ const FindThought = () => {
   const { openModal, closeModal, modalId } = useModal();
   return (
     <>
-      <button onClick={openModal} className="btn btn-xs">
+      <button
+        onClick={openModal}
+        className="btn btn-ghost btn-xs sm:btn sm:btn-xs"
+      >
         جستجو
       </button>
       <Modal id={modalId}>

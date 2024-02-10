@@ -1,4 +1,4 @@
-import { findThoughts } from "@/app/(overview)/lib/actions";
+import { findThoughts } from "@/app/lib/thoughts/actions";
 import { Thought } from "@prisma/client";
 import { direction } from "direction";
 import React, { useContext, useEffect, useState } from "react";

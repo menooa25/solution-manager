@@ -1,21 +1,14 @@
 "use client";
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useMemo } from "react";
 import ReactFlow, {
   Background,
   BackgroundVariant,
   Controls,
-  Edge,
-  Node,
   Panel,
-  useEdgesState,
-  useNodesState,
 } from "reactflow";
-import { getAllRelatedThoughts } from "../../lib/actions";
-import { extractNodesEdges, getLayoutedElements } from "../../lib/utils";
-import AddThought from "./panelButtons/AddThought";
-import Thought from "./singleThought/Thought";
-import PanelButtonsContainer from "./panelButtons/PanelButtonsContainer";
 import { ThoughtContext } from "./ReactFlowThoughtsProvider";
+import PanelButtonsContainer from "./panelButtons/PanelButtonsContainer";
+import Thought from "./singleThought/Thought";
 
 const ReactFlowThoughtsContainer = () => {
   const { edges, onEdgesChange, nodes, onNodesChange } =

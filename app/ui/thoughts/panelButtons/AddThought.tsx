@@ -2,9 +2,9 @@
 
 import useModal from "@/app/hooks/useModal";
 import Modal from "@/app/ui/Modal";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { createThought } from "../../../lib/actions";
+import { createThought } from "../../../lib/thoughts/actions";
 import { direction } from "direction";
 
 type Inputs = {
@@ -38,7 +38,10 @@ const AddThought = ({ type }: Props) => {
 
   return (
     <>
-      <button onClick={openModal} className="btn btn-xs">
+      <button
+        onClick={openModal}
+        className="btn btn-ghost btn-xs sm:btn sm:btn-xs"
+      >
         ثبت {type === "issue" ? "مسله" : "راه حل"}
       </button>
       <Modal id={modalId}>
@@ -107,4 +110,4 @@ const AddThought = ({ type }: Props) => {
   );
 };
 
-export default AddThought;
+export default memo(AddThought);

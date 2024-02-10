@@ -2,7 +2,7 @@
 import {
   createRelatedThought,
   createThought,
-} from "@/app/(overview)/lib/actions";
+} from "@/app/lib/thoughts/actions";
 import { IoMdAdd } from "react-icons/io";
 
 import useModal from "@/app/hooks/useModal";
@@ -27,7 +27,7 @@ interface Props {
 const AddRelatedThought = ({ type, id, currentThoughtDescription }: Props) => {
   const { modalId, openModal, closeModal } = useModal();
   const [loading, setLoading] = useState(false);
-  const { fetchIssues } = useContext(ThoughtContext);
+  const { fetchIssues, reLayout } = useContext(ThoughtContext);
   const {
     register,
     handleSubmit,
@@ -47,6 +47,7 @@ const AddRelatedThought = ({ type, id, currentThoughtDescription }: Props) => {
     setLoading(false);
     closeModal();
     await fetchIssues(id);
+    reLayout();
   };
 
   return (

@@ -1,5 +1,5 @@
 "use client";
-import { deleteThought } from "@/app/(overview)/lib/actions";
+import { deleteThought } from "@/app/lib/thoughts/actions";
 import useModal from "@/app/hooks/useModal";
 import Modal from "@/app/ui/Modal";
 import { useContext, useState } from "react";
@@ -13,14 +13,15 @@ interface Props {
 const RemoveThought = ({ id, description }: Props) => {
   const { openModal, modalId, closeModal } = useModal();
   const [loading, setLoading] = useState(false);
-  const { fetchIssues } = useContext(ThoughtContext);
+  const { fetchIssues, reLayout } = useContext(ThoughtContext);
   const onDelete = async () => {
     setLoading(true);
     await deleteThought(id);
     const lastFetchId = +(localStorage.getItem("lastFetchId") ?? "");
     if (lastFetchId) {
-      fetchIssues(lastFetchId);
+      await fetchIssues(lastFetchId);
       closeModal();
+      reLayout();
     }
     setLoading(false);
   };
