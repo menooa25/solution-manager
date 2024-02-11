@@ -16,6 +16,9 @@ const SearchThought = ({ callBackFunc }: Props) => {
   const fetchContainedThoughts = async () => {
     if (searchText) setThoughts(await findThoughts(searchText));
   };
+  const allThoughtsList = async () => {
+    setThoughts(await findThoughts(""));
+  };
   const onSelect = async (id: number) => {
     await fetchIssues(id);
     callBackFunc && callBackFunc();
@@ -41,6 +44,12 @@ const SearchThought = ({ callBackFunc }: Props) => {
           className="input input-bordered input-sm w-full   focus-visible:outline-none "
         />
       </label>
+      <button
+        onClick={allThoughtsList}
+        className="btn w-full btn-sm mt-1 btn-neutral"
+      >
+        لیست همه افکار
+      </button>
       <div className="flex flex-col gap-y-2 mt-4 items-stretch w-full">
         {thoughts.map(({ description, id }) => (
           <span
