@@ -5,6 +5,7 @@ import "reactflow/dist/style.css";
 import AuthSession from "./AuthSession";
 import Navbar from "./ui/navbar/Navbar";
 import ReactFlowProvider from "./ui/ReactFlowProvider";
+import ThoughtsNodeProvider from "./ui/thoughts/ThoughtsNodeProvider";
 
 const vazirmatn = Vazirmatn({ subsets: ["arabic", "latin", "latin-ext"] });
 
@@ -23,10 +24,12 @@ export default function RootLayout({
       <body className={vazirmatn.className}>
         <AuthSession>
           <ReactFlowProvider>
-            <div>
-              <Navbar />
-            </div>
-            {children}
+            <ThoughtsNodeProvider>
+              <div>
+                <Navbar />
+              </div>
+              {children}
+            </ThoughtsNodeProvider>
           </ReactFlowProvider>
         </AuthSession>
       </body>

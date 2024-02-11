@@ -1,12 +1,17 @@
 "use client";
 
-import { useReactFlow } from "reactflow";
+import { useContext } from "react";
 import { RiFocus3Line } from "react-icons/ri";
+import { ThoughtNodeContext } from "../thoughts/ThoughtsNodeProvider";
 
 const FocusToNode = () => {
-  const { setViewport, zoomIn, zoomOut } = useReactFlow();
+  const { locateMainNode } = useContext(ThoughtNodeContext);
+
   return (
-    <button className="btn btn-ghost btn-sm btn-circle hover:!bg-transparent">
+    <button
+      onClick={locateMainNode}
+      className="btn btn-ghost btn-sm btn-circle hover:!bg-transparent"
+    >
       <RiFocus3Line size={50} />
     </button>
   );

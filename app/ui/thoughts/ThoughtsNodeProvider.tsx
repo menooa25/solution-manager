@@ -16,6 +16,7 @@ import {
   OnNodesChange,
   useEdgesState,
   useNodesState,
+  useReactFlow,
 } from "reactflow";
 import { getAllRelatedThoughts } from "../../lib/thoughts/actions";
 import {
@@ -33,6 +34,7 @@ interface ContextType {
   fetchIssues: (id: number) => Promise<any>;
   reLayout: () => void;
   mainNodeId: string;
+  locateMainNode: () => void;
 }
 export const ThoughtNodeContext = createContext<ContextType>({
   edges: [],
@@ -44,11 +46,14 @@ export const ThoughtNodeContext = createContext<ContextType>({
   fetchIssues: async (id) => {},
   reLayout: () => {},
   mainNodeId: "0",
+  locateMainNode: () => {},
 });
 
 const ThoughtsNodeProvider = ({ children }: PropsWithChildren) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const { setCenter } = useReactFlow();
+
   const [mainNodeId, setMainNodeId] = useState("0");
   const onLayout = (nodes: Node[], edges: Edge[]) => {
     const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
@@ -61,6 +66,13 @@ const ThoughtsNodeProvider = ({ children }: PropsWithChildren) => {
   };
   const reLayout = () => {
     if (nodes.length) onLayout(nodes, edges);
+  };
+  const locateMainNode = () => {
+    const mainNode = nodes.find(({ id }) => id === mainNodeId);
+    if (mainNode) {
+      const { x, y } = mainNode.position;
+      setCenter(x, y, { duration: 800 });
+    }
   };
   const fetchIssues = useCallback(async (id: number) => {
     localStorage.setItem("lastFetchId", id.toString());
@@ -80,6 +92,7 @@ const ThoughtsNodeProvider = ({ children }: PropsWithChildren) => {
     <ThoughtNodeContext.Provider
       value={{
         nodes,
+        locateMainNode,
         onNodesChange,
         edges,
         onEdgesChange,
