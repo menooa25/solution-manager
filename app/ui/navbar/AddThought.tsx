@@ -2,10 +2,11 @@
 
 import useModal from "@/app/hooks/useModal";
 import Modal from "@/app/ui/Modal";
-import { memo, useState } from "react";
+import { memo, useContext, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { createThought } from "../../lib/thoughts/actions";
 import { direction } from "direction";
+import { ThoughtNodeContext } from "../thoughts/ThoughtsNodeProvider";
 
 type Inputs = {
   description: string;

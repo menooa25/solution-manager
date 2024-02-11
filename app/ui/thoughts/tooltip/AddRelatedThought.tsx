@@ -8,7 +8,7 @@ import { IoMdAdd } from "react-icons/io";
 import useModal from "@/app/hooks/useModal";
 import Modal from "@/app/ui/Modal";
 import { direction } from "direction";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ThoughtNodeContext } from "../ThoughtsNodeProvider";
 import Thought from "../singleThought/Thought";
@@ -27,7 +27,11 @@ interface Props {
 const AddRelatedThought = ({ type, id, currentThoughtDescription }: Props) => {
   const { modalId, openModal, closeModal } = useModal();
   const [loading, setLoading] = useState(false);
-  const { fetchIssues } = useContext(ThoughtNodeContext);
+  const [addedNode, setAddedNode] = useState<string>();
+
+  const { fetchIssues, locateMainNode, mainNodeId } =
+    useContext(ThoughtNodeContext);
+
   const {
     register,
     handleSubmit,
@@ -47,8 +51,15 @@ const AddRelatedThought = ({ type, id, currentThoughtDescription }: Props) => {
     setLoading(false);
     closeModal();
     await fetchIssues(id);
+    setAddedNode(id.toString());
   };
 
+  useEffect(() => {
+    if (addedNode && mainNodeId && addedNode === mainNodeId) {
+      locateMainNode()
+      setAddedNode(undefined)
+    }
+  }, [addedNode, mainNodeId]);
   return (
     <>
       <button

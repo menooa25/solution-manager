@@ -60,7 +60,7 @@ const ThoughtsNodeProvider = ({ children }: PropsWithChildren) => {
       nodesForLayout,
       edgesForLayout
     );
-    console.log(layoutedNodes);
+
     setNodes([...layoutedNodes]);
     setEdges([...layoutedEdges]);
   };
@@ -77,10 +77,10 @@ const ThoughtsNodeProvider = ({ children }: PropsWithChildren) => {
   };
   const fetchIssues = async (id: number) => {
     localStorage.setItem("lastFetchId", id.toString());
+    setMainNodeId(id.toString());
     const result = await getAllRelatedThoughts(id);
     const extracted = extractNodesEdges(result);
     onLayout(extracted.nodes, extracted.edges);
-    setMainNodeId(id.toString());
   };
   useEffect(() => {
     const lastFetchId = +(localStorage.getItem("lastFetchId") ?? "");
