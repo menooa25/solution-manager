@@ -13,7 +13,7 @@ interface Props {
 const RemoveThought = ({ id, description }: Props) => {
   const { openModal, modalId, closeModal } = useModal();
   const [loading, setLoading] = useState(false);
-  const { fetchIssues, reLayout } = useContext(ThoughtNodeContext);
+  const { fetchIssues } = useContext(ThoughtNodeContext);
   const onDelete = async () => {
     setLoading(true);
     await deleteThought(id);
@@ -21,7 +21,6 @@ const RemoveThought = ({ id, description }: Props) => {
     if (lastFetchId) {
       await fetchIssues(lastFetchId);
       closeModal();
-      reLayout();
     }
     setLoading(false);
   };

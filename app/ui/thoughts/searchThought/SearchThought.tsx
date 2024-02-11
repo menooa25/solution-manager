@@ -10,10 +10,9 @@ interface Props {
 const SearchThought = ({ callBackFunc }: Props) => {
   const [searchText, setSearchText] = useState("");
   const [thoughts, setThoughts] = useState<Thought[]>([]);
-  const { fetchIssues, reLayout } = useContext(ThoughtNodeContext);
+  const { fetchIssues } = useContext(ThoughtNodeContext);
   const fetchContainedThoughts = async () => {
     if (searchText) setThoughts(await findThoughts(searchText));
-    reLayout();
   };
   const onSelect = (id: number) => {
     fetchIssues(id);

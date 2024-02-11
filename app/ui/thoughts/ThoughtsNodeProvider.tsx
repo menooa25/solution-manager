@@ -55,17 +55,17 @@ const ThoughtsNodeProvider = ({ children }: PropsWithChildren) => {
   const { setCenter } = useReactFlow();
 
   const [mainNodeId, setMainNodeId] = useState("0");
-  const onLayout = (nodes: Node[], edges: Edge[]) => {
+  const onLayout = (nodesForLayout: Node[], edgesForLayout: Edge[]) => {
     const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
-      nodes,
-      edges
+      nodesForLayout,
+      edgesForLayout
     );
-
+    console.log(layoutedNodes);
     setNodes([...layoutedNodes]);
     setEdges([...layoutedEdges]);
   };
   const reLayout = () => {
-    if (nodes.length) onLayout(nodes, edges);
+    // need to be implement
   };
   const locateMainNode = () => {
     const mainNode = nodes.find(({ id }) => id === mainNodeId);
@@ -75,13 +75,13 @@ const ThoughtsNodeProvider = ({ children }: PropsWithChildren) => {
       setCenter(x + 50, y, { duration: 800 });
     }
   };
-  const fetchIssues = useCallback(async (id: number) => {
+  const fetchIssues = async (id: number) => {
     localStorage.setItem("lastFetchId", id.toString());
     const result = await getAllRelatedThoughts(id);
     const extracted = extractNodesEdges(result);
     onLayout(extracted.nodes, extracted.edges);
     setMainNodeId(id.toString());
-  }, []);
+  };
   useEffect(() => {
     const lastFetchId = +(localStorage.getItem("lastFetchId") ?? "");
     if (lastFetchId) {

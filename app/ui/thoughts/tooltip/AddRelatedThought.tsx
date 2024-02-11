@@ -27,7 +27,7 @@ interface Props {
 const AddRelatedThought = ({ type, id, currentThoughtDescription }: Props) => {
   const { modalId, openModal, closeModal } = useModal();
   const [loading, setLoading] = useState(false);
-  const { fetchIssues, reLayout } = useContext(ThoughtNodeContext);
+  const { fetchIssues } = useContext(ThoughtNodeContext);
   const {
     register,
     handleSubmit,
@@ -47,7 +47,6 @@ const AddRelatedThought = ({ type, id, currentThoughtDescription }: Props) => {
     setLoading(false);
     closeModal();
     await fetchIssues(id);
-    reLayout();
   };
 
   return (
