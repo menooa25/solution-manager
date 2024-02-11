@@ -37,7 +37,7 @@ export const createRelatedThought = async (
   });
   if (relatedType === "issue") {
     await prisma.thought.update({
-      where: { id,userId },
+      where: { id, userId },
       data: {
         issues: {
           connect: related,
@@ -46,7 +46,7 @@ export const createRelatedThought = async (
     });
   } else
     await prisma.thought.update({
-      where: { id ,userId},
+      where: { id, userId },
       data: {
         solutions: {
           connect: related,
@@ -112,5 +112,15 @@ export const findThoughts = async (description: string) => {
         contains: description,
       },
     },
+  });
+};
+
+
+export const renameThought = async (id: number, description: string) => {
+  const userId = await getUserId();
+  if (!userId) return null;
+  return await prisma.thought.update({
+    where: { id, userId },
+    data: { description },
   });
 };

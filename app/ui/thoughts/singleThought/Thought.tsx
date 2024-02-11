@@ -1,12 +1,14 @@
 "use client";
 import { Thought as ThoughtType } from "@prisma/client";
 import clsx from "clsx";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Handle, NodeToolbar, Position } from "reactflow";
 import { ThoughtNodeContext } from "../ThoughtsNodeProvider";
 import AddRelatedThought from "../tooltip/AddRelatedThought";
 import LocateCloseThoughts from "../tooltip/LocateCloseThoughts";
 import RemoveThought from "../tooltip/RemoveThought";
+import ThoughtToolbarContainer from "./ThoughtToolbarContainer";
+import RenameThought from "../RenameThought";
 interface Props {
   id: string;
   data: ThoughtType & {
@@ -16,48 +18,31 @@ interface Props {
 }
 const Thought = ({ data }: Props) => {
   const { mainNodeId } = useContext(ThoughtNodeContext);
+  const [onRename, setOnRename] = useState(false);
 
   const btnClass = clsx("btn btn-sm", {
     "!btn-neutral": +mainNodeId === data.id,
   });
+
   return (
     <div>
-      <NodeToolbar>
-        <div className="-mb-1">
-          <AddRelatedThought
-            currentThoughtDescription={data.description}
-            id={data.id}
-            type="issue"
-          />
-        </div>
-      </NodeToolbar>
-      <NodeToolbar position={Position.Bottom}>
-        <div className="-mt-1">
-          <AddRelatedThought
-            currentThoughtDescription={data.description}
-            id={data.id}
-            type="solution"
-          />
-        </div>
-      </NodeToolbar>
-      <NodeToolbar position={Position.Right}>
-        <div className="-ml-3">
-          <LocateCloseThoughts id={data.id} />
-        </div>
-      </NodeToolbar>
-      <NodeToolbar position={Position.Left}>
-        <div className="-mr-3">
-          <RemoveThought description={data.description} id={data.id} />
-        </div>
-      </NodeToolbar>
+      {!onRename && <ThoughtToolbarContainer data={data} />}
       <Handle
         position={Position.Top}
         className="!bg-transparent  !-z-10 !top-[1px] !border-none"
         type="target"
       />
-      <div>
-        <button className={" " + btnClass}>{data.description}</button>
-      </div>
+      {onRename && (
+        <RenameThought onClose={() => setOnRename(false)} thought={data} />
+      )}
+      {!onRename && (
+        <button
+          onDoubleClick={() => setOnRename(true)}
+          className={" " + btnClass}
+        >
+          {data.description}
+        </button>
+      )}
       <Handle
         className="!bg-transparent !-z-10 !bottom-[1px] !border-none"
         position={Position.Bottom}

@@ -36,8 +36,8 @@ const Navbar = () => {
         <Rendrer condition={pathName === "/"}>
           <div className="ml-2 flex flex-col gap-y-2 sm:m-0 sm:absolute sm:left-3 sm:top-3 ">
             <ReLayout />
-            <FocusToNode />
             <FindThought />
+            <FocusToNode />
           </div>
         </Rendrer>
       </div>
