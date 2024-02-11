@@ -3,15 +3,14 @@
 import { FiLayout } from "react-icons/fi";
 const ReLayout = () => {
   return (
-    <div
+    <button
       onClick={() => {
         window.location.reload();
       }}
+      className="btn btn-ghost btn-sm btn-circle hover:!bg-transparent"
     >
-      <button className=" btn btn-xs  btn-ghost p-0 hover:bg-transparent">
-        <FiLayout size={30} />
-      </button>
-    </div>
+      <FiLayout size={30} />
+    </button>
   );
 };
 

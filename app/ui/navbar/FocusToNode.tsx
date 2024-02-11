@@ -12,7 +12,7 @@ const FocusToNode = () => {
       onClick={locateMainNode}
       className="btn btn-ghost btn-sm btn-circle hover:!bg-transparent"
     >
-      <RiFocus3Line size={50} />
+      <RiFocus3Line size={30} />
     </button>
   );
 };

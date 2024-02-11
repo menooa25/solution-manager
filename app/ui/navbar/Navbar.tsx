@@ -15,7 +15,6 @@ const Navbar = () => {
     <div className="sm:w-screen absolute z-10">
       <div className="hidden  sm:flex justify-center gap-x-2 mt-2 ">
         <AccountLink />
-        <FindThought />
         <AddThought type="solution" />
         <AddThought type="issue" />
       </div>
@@ -29,16 +28,16 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content   z-[1] p-2 pt-3 shadow bg-base-100 rounded-box w-screen top-0"
           >
-            <FindThought />
             <AddThought type="solution" />
             <AddThought type="issue" />
             <AccountLink />
           </div>
         </div>
         <Rendrer condition={pathName === "/"}>
-          <div className="ml-2 sm:m-0 sm:absolute sm:left-3 sm:top-3 ">
+          <div className="ml-2 flex flex-col gap-y-2 sm:m-0 sm:absolute sm:left-3 sm:top-3 ">
             <ReLayout />
             <FocusToNode />
+            <FindThought />
           </div>
         </Rendrer>
       </div>
