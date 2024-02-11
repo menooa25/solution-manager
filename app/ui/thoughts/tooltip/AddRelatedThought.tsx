@@ -13,6 +13,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ThoughtNodeContext } from "../ThoughtsNodeProvider";
 import Thought from "../singleThought/Thought";
 import { useUpdateNodeInternals } from "reactflow";
+import useLocateNodeInIDChange from "@/app/hooks/thoughts/useLocateAfterIDChange";
 
 type Inputs = {
   description: string;
@@ -27,10 +28,8 @@ interface Props {
 const AddRelatedThought = ({ type, id, currentThoughtDescription }: Props) => {
   const { modalId, openModal, closeModal } = useModal();
   const [loading, setLoading] = useState(false);
-  const [addedNode, setAddedNode] = useState<string>();
-
-  const { fetchIssues, locateMainNode, mainNodeId } =
-    useContext(ThoughtNodeContext);
+  const { setAddedNodeId } = useLocateNodeInIDChange();
+  const { fetchIssues } = useContext(ThoughtNodeContext);
 
   const {
     register,
@@ -51,15 +50,9 @@ const AddRelatedThought = ({ type, id, currentThoughtDescription }: Props) => {
     setLoading(false);
     closeModal();
     await fetchIssues(id);
-    setAddedNode(id.toString());
+    setAddedNodeId(id.toString());
   };
 
-  useEffect(() => {
-    if (addedNode && mainNodeId && addedNode === mainNodeId) {
-      locateMainNode()
-      setAddedNode(undefined)
-    }
-  }, [addedNode, mainNodeId]);
   return (
     <>
       <button
