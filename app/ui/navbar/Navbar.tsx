@@ -12,7 +12,7 @@ import FocusToNode from "./FocusToNode";
 const Navbar = () => {
   const pathName = usePathname();
   return (
-    <div className="w-screen absolute z-10">
+    <div className="sm:w-screen absolute z-10">
       <div className="hidden  sm:flex justify-center gap-x-2 mt-2 ">
         <AccountLink />
         <FindThought />
@@ -20,7 +20,7 @@ const Navbar = () => {
         <AddThought type="issue" />
       </div>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col ">
         <div className="dropdown sm:hidden">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
             <CgDetailsMore size={30} />
@@ -36,7 +36,7 @@ const Navbar = () => {
           </div>
         </div>
         <Rendrer condition={pathName === "/"}>
-          <div className="ml-2 sm:m-0 sm:absolute sm:left-3 sm:top-3">
+          <div className="ml-2 sm:m-0 sm:absolute sm:left-3 sm:top-3 ">
             <ReLayout />
             <FocusToNode />
           </div>

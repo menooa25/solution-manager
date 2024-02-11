@@ -71,7 +71,8 @@ const ThoughtsNodeProvider = ({ children }: PropsWithChildren) => {
     const mainNode = nodes.find(({ id }) => id === mainNodeId);
     if (mainNode) {
       const { x, y } = mainNode.position;
-      setCenter(x, y, { duration: 800 });
+
+      setCenter(x + 50, y, { duration: 800 });
     }
   };
   const fetchIssues = useCallback(async (id: number) => {
