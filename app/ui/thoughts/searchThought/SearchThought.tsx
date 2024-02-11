@@ -3,6 +3,7 @@ import { Thought } from "@prisma/client";
 import { direction } from "direction";
 import React, { useContext, useEffect, useState } from "react";
 import { ThoughtNodeContext } from "../ThoughtsNodeProvider";
+import useLocateNodeInIDChange from "@/app/hooks/thoughts/useLocateAfterIDChange";
 
 interface Props {
   callBackFunc?: () => void;
@@ -10,13 +11,15 @@ interface Props {
 const SearchThought = ({ callBackFunc }: Props) => {
   const [searchText, setSearchText] = useState("");
   const [thoughts, setThoughts] = useState<Thought[]>([]);
+  const { setAddedNodeId } = useLocateNodeInIDChange();
   const { fetchIssues } = useContext(ThoughtNodeContext);
   const fetchContainedThoughts = async () => {
     if (searchText) setThoughts(await findThoughts(searchText));
   };
-  const onSelect = (id: number) => {
-    fetchIssues(id);
+  const onSelect = async (id: number) => {
+    await fetchIssues(id);
     callBackFunc && callBackFunc();
+    setAddedNodeId(id.toString());
   };
   useEffect(() => {
     const timeout = setTimeout(fetchContainedThoughts, 800);
