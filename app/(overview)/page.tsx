@@ -1,3 +1,4 @@
+import { ReactFlowProvider } from "reactflow";
 import ReactFlowThoughtsContainer from "../ui/thoughts/ReactFlowThoughtsContainer";
 import ThoughtsNodeProvider from "../ui/thoughts/ThoughtsNodeProvider";
 

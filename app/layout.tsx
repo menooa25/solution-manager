@@ -3,7 +3,8 @@ import { Vazirmatn } from "next/font/google";
 import "./globals.css";
 import "reactflow/dist/style.css";
 import AuthSession from "./AuthSession";
-import PanelButtonsContainer from "./ui/navbar/PanelButtonsContainer";
+import Navbar from "./ui/navbar/Navbar";
+import ReactFlowProvider from "./ui/ReactFlowProvider";
 
 const vazirmatn = Vazirmatn({ subsets: ["arabic", "latin", "latin-ext"] });
 
@@ -20,10 +21,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={vazirmatn.className}>
-        <div>
-          <PanelButtonsContainer />
-        </div>
-        <AuthSession>{children}</AuthSession>
+        <AuthSession>
+          <ReactFlowProvider>
+            <div>
+              <Navbar />
+            </div>
+            {children}
+          </ReactFlowProvider>
+        </AuthSession>
       </body>
     </html>
   );
