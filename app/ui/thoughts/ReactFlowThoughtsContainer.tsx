@@ -1,10 +1,6 @@
 "use client";
-import { useContext, useMemo } from "react";
-import ReactFlow, {
-  Background,
-  BackgroundVariant,
-  Controls
-} from "reactflow";
+import { useContext, useEffect, useMemo } from "react";
+import ReactFlow, { Background, BackgroundVariant, Controls } from "reactflow";
 import { ThoughtNodeContext } from "./ThoughtsNodeProvider";
 import Thought from "./singleThought/Thought";
 
@@ -20,7 +16,7 @@ const ReactFlowThoughtsContainer = () => {
   );
 
   return (
-    <div className="h-screen w-screen ">
+    <div className="h-dvh w-dvw ">
       <ReactFlow
         nodes={nodes}
         onNodesChange={onNodesChange}
@@ -29,7 +25,6 @@ const ReactFlowThoughtsContainer = () => {
         nodeTypes={nodeTypes}
         proOptions={{ hideAttribution: true }}
         fitView
-        onlyRenderVisibleElements
         zoomOnDoubleClick
       >
         <Controls className="!mb-16 sm:!mb-4" />

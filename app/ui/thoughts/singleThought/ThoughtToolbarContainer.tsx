@@ -1,7 +1,7 @@
 "use client";
 
 import { NodeToolbar, Position } from "reactflow";
-import AddRelatedThought from "../tooltip/AddRelatedThought";
+import AddRelatedThought from "../tooltip/addRealetedThought/AddRelatedThought";
 import LocateCloseThoughts from "../tooltip/LocateCloseThoughts";
 import RemoveThought from "../tooltip/RemoveThought";
 import { Thought } from "@prisma/client";

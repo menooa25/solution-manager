@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { useContext, useState } from "react";
 import { Handle, NodeToolbar, Position } from "reactflow";
 import { ThoughtNodeContext } from "../ThoughtsNodeProvider";
-import AddRelatedThought from "../tooltip/AddRelatedThought";
+import AddRelatedThought from "../tooltip/addRealetedThought/AddRelatedThought";
 import LocateCloseThoughts from "../tooltip/LocateCloseThoughts";
 import RemoveThought from "../tooltip/RemoveThought";
 import ThoughtToolbarContainer from "./ThoughtToolbarContainer";

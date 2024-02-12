@@ -65,7 +65,7 @@ const ThoughtsNodeProvider = ({ children }: PropsWithChildren) => {
     setEdges([...layoutedEdges]);
   };
   const reLayout = () => {
-    // need to be implement
+    window.location.reload();
   };
   const locateMainNode = () => {
     const mainNode = nodes.find(({ id }) => id === mainNodeId);
