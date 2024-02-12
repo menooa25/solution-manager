@@ -14,15 +14,9 @@ type Inputs = {
 interface Props {
   id: number;
   type: "issue" | "solution";
-  currentThoughtDescription: string;
   onSubmited: () => void;
 }
-const CreateNewThoughtForm = ({
-  id,
-  type,
-  currentThoughtDescription,
-  onSubmited,
-}: Props) => {
+const CreateNewThoughtForm = ({ id, type, onSubmited }: Props) => {
   const [loading, setLoading] = useState(false);
   const { setAddedNodeId } = useLocateNodeInIDChange();
   const { fetchIssues } = useContext(ThoughtNodeContext);
@@ -49,12 +43,6 @@ const CreateNewThoughtForm = ({
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} dir="rtl">
-      <span
-        dir={direction(currentThoughtDescription)}
-        className="block text-center font-bold "
-      >
-        {currentThoughtDescription}
-      </span>
       <label className="form-control w-full ">
         <div className="label pb-1">
           <span className="label-text-alt font-bold text-sm ">

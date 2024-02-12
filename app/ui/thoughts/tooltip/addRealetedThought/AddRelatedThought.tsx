@@ -3,8 +3,14 @@ import { IoMdAdd } from "react-icons/io";
 
 import useModal from "@/app/hooks/useModal";
 import Modal from "@/app/ui/Modal";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import CreateNewThoughtForm from "./CreateNewThoughtForm";
+import SearchThought from "../../searchThought/SearchThought";
+import { createRelatedThought } from "@/app/lib/thoughts/actions";
+import { Thought } from "@prisma/client";
+import { direction } from "direction";
+import useLocateNodeInIDChange from "@/app/hooks/thoughts/useLocateAfterIDChange";
+import { ThoughtNodeContext } from "../../ThoughtsNodeProvider";
 
 type Inputs = {
   description: string;
@@ -18,9 +24,21 @@ interface Props {
 
 const AddRelatedThought = ({ type, id, currentThoughtDescription }: Props) => {
   const { modalId, openModal, closeModal } = useModal();
-
+  const { setAddedNodeId } = useLocateNodeInIDChange();
+  const { fetchIssues } = useContext(ThoughtNodeContext);
   const [createNewOne, setCreateNewOne] = useState(true);
-
+  const onSubmitFromExistedThought = async (thought: Thought) => {
+    await createRelatedThought(
+      id,
+      type === "issue",
+      thought.description,
+      thought.feelGood,
+      type
+    );
+    closeModal();
+    await fetchIssues(id);
+    setAddedNodeId(id.toString());
+  };
   return (
     <>
       <button
@@ -51,12 +69,22 @@ const AddRelatedThought = ({ type, id, currentThoughtDescription }: Props) => {
             <span>ایحاد</span>
           </a>
         </div>
-        <CreateNewThoughtForm
-          id={id}
-          currentThoughtDescription={currentThoughtDescription}
-          onSubmited={closeModal}
-          type={type}
-        />
+        <span
+          dir={direction(currentThoughtDescription)}
+          className="block text-center font-bold mt-2"
+        >
+          {currentThoughtDescription}
+        </span>
+        {createNewOne && (
+          <CreateNewThoughtForm
+            id={id}
+            onSubmited={closeModal}
+            type={type}
+          />
+        )}
+        {!createNewOne && (
+          <SearchThought callBackFunc={onSubmitFromExistedThought} />
+        )}
       </Modal>
     </>
   );

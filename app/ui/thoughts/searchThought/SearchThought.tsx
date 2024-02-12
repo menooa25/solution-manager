@@ -4,7 +4,7 @@ import { direction } from "direction";
 import { useEffect, useState } from "react";
 
 interface Props {
-  callBackFunc: (id: number) => void;
+  callBackFunc: (thought: Thought) => void;
 }
 const SearchThought = ({ callBackFunc }: Props) => {
   const [searchText, setSearchText] = useState("");
@@ -43,13 +43,13 @@ const SearchThought = ({ callBackFunc }: Props) => {
         لیست همه افکار
       </button>
       <div className="flex flex-col gap-y-2 mt-4 items-stretch w-full">
-        {thoughts.map(({ description, id }) => (
+        {thoughts.map((thought) => (
           <span
-            onClick={() => callBackFunc(+id)}
+            onClick={() => callBackFunc({ ...thought })}
             className="border rounded-lg w-full text-center p-1 shadow cursor-pointer"
-            key={id}
+            key={thought.id}
           >
-            {description}
+            {thought.description}
           </span>
         ))}
       </div>

@@ -7,13 +7,15 @@ import { IoMdSearch } from "react-icons/io";
 import { useContext } from "react";
 import { ThoughtNodeContext } from "../thoughts/ThoughtsNodeProvider";
 import useLocateNodeInIDChange from "@/app/hooks/thoughts/useLocateAfterIDChange";
+import { Thought } from "@prisma/client";
 
 const FindThought = () => {
   const { openModal, closeModal, modalId } = useModal();
   const { fetchIssues } = useContext(ThoughtNodeContext);
   const { setAddedNodeId } = useLocateNodeInIDChange();
 
-  const onSubmit = async (id: number) => {
+  const onSubmit = async (thought: Thought) => {
+    const {id} = thought
     closeModal();
     await fetchIssues(id);
     setAddedNodeId(id.toString());
