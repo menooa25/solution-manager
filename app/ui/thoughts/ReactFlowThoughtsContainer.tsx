@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useMemo } from "react";
 import ReactFlow, { Background, BackgroundVariant, Controls } from "reactflow";
 import { ThoughtNodeContext } from "./ThoughtsNodeProvider";
 import Thought from "./singleThought/Thought";
