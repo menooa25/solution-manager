@@ -1,29 +1,21 @@
 import { findThoughts } from "@/app/lib/thoughts/actions";
 import { Thought } from "@prisma/client";
 import { direction } from "direction";
-import React, { useContext, useEffect, useState } from "react";
-import { ThoughtNodeContext } from "../ThoughtsNodeProvider";
-import useLocateNodeInIDChange from "@/app/hooks/thoughts/useLocateAfterIDChange";
+import { useEffect, useState } from "react";
 
 interface Props {
-  callBackFunc?: () => void;
+  callBackFunc: (id: number) => void;
 }
 const SearchThought = ({ callBackFunc }: Props) => {
   const [searchText, setSearchText] = useState("");
   const [thoughts, setThoughts] = useState<Thought[]>([]);
-  const { setAddedNodeId } = useLocateNodeInIDChange();
-  const { fetchIssues } = useContext(ThoughtNodeContext);
   const fetchContainedThoughts = async () => {
     if (searchText) setThoughts(await findThoughts(searchText));
   };
   const allThoughtsList = async () => {
     setThoughts(await findThoughts(""));
   };
-  const onSelect = async (id: number) => {
-    await fetchIssues(id);
-    callBackFunc && callBackFunc();
-    setAddedNodeId(id.toString());
-  };
+
   useEffect(() => {
     const timeout = setTimeout(fetchContainedThoughts, 800);
     return () => clearTimeout(timeout);
@@ -53,7 +45,7 @@ const SearchThought = ({ callBackFunc }: Props) => {
       <div className="flex flex-col gap-y-2 mt-4 items-stretch w-full">
         {thoughts.map(({ description, id }) => (
           <span
-            onClick={() => onSelect(id)}
+            onClick={() => callBackFunc(+id)}
             className="border rounded-lg w-full text-center p-1 shadow cursor-pointer"
             key={id}
           >

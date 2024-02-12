@@ -4,9 +4,21 @@ import useModal from "@/app/hooks/useModal";
 import Modal from "@/app/ui/Modal";
 import SearchThought from "../thoughts/searchThought/SearchThought";
 import { IoMdSearch } from "react-icons/io";
+import { useContext } from "react";
+import { ThoughtNodeContext } from "../thoughts/ThoughtsNodeProvider";
+import useLocateNodeInIDChange from "@/app/hooks/thoughts/useLocateAfterIDChange";
 
 const FindThought = () => {
   const { openModal, closeModal, modalId } = useModal();
+  const { fetchIssues } = useContext(ThoughtNodeContext);
+  const { setAddedNodeId } = useLocateNodeInIDChange();
+
+  const onSubmit = async (id: number) => {
+    closeModal();
+    await fetchIssues(id);
+    setAddedNodeId(id.toString());
+  };
+
   return (
     <>
       <button
@@ -16,7 +28,7 @@ const FindThought = () => {
         <IoMdSearch size={30} />
       </button>
       <Modal id={modalId}>
-        <SearchThought callBackFunc={closeModal} />
+        <SearchThought callBackFunc={onSubmit} />
       </Modal>
     </>
   );
