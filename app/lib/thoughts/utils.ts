@@ -42,14 +42,14 @@ export const getLayoutedElements = (
   return { nodes, edges };
 };
 const getStrokeColor = (
-  thoughtFeelGood: boolean,
-  isParent: boolean,
-  feelGood: boolean
+  feelGood: boolean,
+  relatedPosition: boolean,
+  relatedFeelGood: boolean
 ) => {
-  if (isParent) {
-    return !thoughtFeelGood ? "#e93f33" : "#45aeee";
-  } else {
+  if (relatedPosition) {
     return !feelGood ? "#e93f33" : "#45aeee";
+  } else {
+    return !relatedFeelGood ? "#e93f33" : "#45aeee";
   }
 };
 export const extractNodesEdges = (thoughts: FetchedTypes) => {
@@ -58,9 +58,9 @@ export const extractNodesEdges = (thoughts: FetchedTypes) => {
   const addedEdgesIds: string[] = [];
   const getNodeEdge = (
     thought: FetchedTypes | any,
-    id?: number,
-    feelGood?: boolean,
-    relate?: "parent" | "child"
+    relateId?: number,
+    relateFeelGood?: boolean,
+    relatePosition?: "parent" | "child"
   ) => {
     if (thought?.id) {
       nodes.push({
@@ -70,20 +70,28 @@ export const extractNodesEdges = (thoughts: FetchedTypes) => {
         position: { x: 0, y: 0 },
       });
 
-      if (id) {
+      if (relateId) {
         const edgeId =
-          relate === "parent" ? `e${id}${thought.id}` : `e${thought.id}${id}`;
+          relatePosition === "parent"
+            ? `e${relateId}${thought.id}`
+            : `e${thought.id}${relateId}`;
         if (!addedEdgesIds.includes(edgeId)) {
           const strokeColor = getStrokeColor(
             thought.feelGood,
-            relate === "parent",
-            feelGood === true
+            relatePosition === "parent",
+            relateFeelGood === true
           );
 
           edges.push({
             id: edgeId,
-            source: relate === "parent" ? id.toString() : thought.id.toString(),
-            target: relate === "parent" ? thought.id.toString() : id.toString(),
+            source:
+              relatePosition === "parent"
+                ? relateId.toString()
+                : thought.id.toString(),
+            target:
+              relatePosition === "parent"
+                ? thought.id.toString()
+                : relateId.toString(),
             style: { stroke: strokeColor },
           });
           addedEdgesIds.push(edgeId);
