@@ -1,16 +1,10 @@
 "use client";
 import { toPng } from "html-to-image";
-import {
-  getNodesBounds,
-  getRectOfNodes,
-  getTransformForBounds,
-  getViewportForBounds,
-  useReactFlow,
-} from "reactflow";
+import { getNodesBounds, getViewportForBounds, useReactFlow } from "reactflow";
 
 const ExportImage = () => {
-  const imageWidth = 1024;
-  const imageHeight = 768;
+  const imageWidth = 7680;
+  const imageHeight = 4320;
   const downloadImage = (dataUrl: string) => {
     const a = document.createElement("a");
 
