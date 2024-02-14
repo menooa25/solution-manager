@@ -33,7 +33,8 @@ const AddRelatedThought = ({ type, id, currentThoughtDescription }: Props) => {
       type === "issue",
       thought.description,
       thought.feelGood,
-      type
+      type,
+      thought.id
     );
     closeModal();
     await fetchIssues(id);
@@ -76,11 +77,7 @@ const AddRelatedThought = ({ type, id, currentThoughtDescription }: Props) => {
           {currentThoughtDescription}
         </span>
         {createNewOne && (
-          <CreateNewThoughtForm
-            id={id}
-            onSubmited={closeModal}
-            type={type}
-          />
+          <CreateNewThoughtForm id={id} onSubmited={closeModal} type={type} />
         )}
         {!createNewOne && (
           <SearchThought callBackFunc={onSubmitFromExistedThought} />

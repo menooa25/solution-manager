@@ -80,7 +80,7 @@ const ThoughtsNodeProvider = ({ children }: PropsWithChildren) => {
     setMainNodeId(id.toString());
     const result = await getAllRelatedThoughts(id);
     const extracted = extractNodesEdges(result);
-    onLayout(extracted.nodes, extracted.edges);
+    if (extracted.nodes.length) onLayout(extracted.nodes, extracted.edges);
   };
   useEffect(() => {
     const lastFetchId = +(localStorage.getItem("lastFetchId") ?? "");

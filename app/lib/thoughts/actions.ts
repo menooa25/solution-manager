@@ -1,6 +1,7 @@
 "use server";
 import { getUserId } from "@/app/lib/actions";
 import prisma from "@/prisma/db";
+import { Thought } from "@prisma/client";
 
 export const createThought = async (
   isIssue: boolean,
@@ -23,24 +24,34 @@ export const createRelatedThought = async (
   isIssue: boolean,
   description: string,
   feelGood: boolean,
-  relatedType: "solution" | "issue"
+  relatedType: "solution" | "issue",
+  relatedId?: number
 ) => {
   const userId = await getUserId();
   if (!userId) return null;
-  let related = await prisma.thought.create({
-    data: {
-      description,
-      isIssue,
-      feelGood,
-      userId,
-    },
-  });
+  let related: Thought | null = null;
+  if (relatedId)
+    related = await prisma.thought.findUnique({
+      where: {
+        id: relatedId,
+      },
+    });
+  else if (!relatedId && related === null)
+    related = await prisma.thought.create({
+      data: {
+        description,
+        isIssue,
+        feelGood,
+        userId,
+      },
+    });
+
   if (relatedType === "issue") {
     await prisma.thought.update({
       where: { id, userId },
       data: {
         issues: {
-          connect: related,
+          connect: related!,
         },
       },
     });
@@ -49,7 +60,7 @@ export const createRelatedThought = async (
       where: { id, userId },
       data: {
         solutions: {
-          connect: related,
+          connect: related!,
         },
       },
     });
@@ -114,7 +125,6 @@ export const findThoughts = async (description: string) => {
     },
   });
 };
-
 
 export const renameThought = async (id: number, description: string) => {
   const userId = await getUserId();

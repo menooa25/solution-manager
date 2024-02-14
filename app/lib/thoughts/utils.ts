@@ -41,12 +41,25 @@ export const getLayoutedElements = (
 
   return { nodes, edges };
 };
+const getStrokeColor = (
+  thoughtFeelGood: boolean,
+  isParent: boolean,
+  feelGood: boolean
+) => {
+  if (isParent) {
+    return !thoughtFeelGood ? "#e93f33" : "#45aeee";
+  } else {
+    return !feelGood ? "#e93f33" : "#45aeee";
+  }
+};
 export const extractNodesEdges = (thoughts: FetchedTypes) => {
   const nodes: Node[] = [];
   const edges: Edge[] = [];
+  const addedEdgesIds: string[] = [];
   const getNodeEdge = (
     thought: FetchedTypes | any,
     id?: number,
+    feelGood?: boolean,
     relate?: "parent" | "child"
   ) => {
     if (thought?.id) {
@@ -56,27 +69,39 @@ export const extractNodesEdges = (thoughts: FetchedTypes) => {
         data: thought,
         position: { x: 0, y: 0 },
       });
+
       if (id) {
-        edges.push({
-          id:
-            relate === "parent" ? `e${id}${thought.id}` : `e${thought.id}${id}`,
-          source: relate === "parent" ? id.toString() : thought.id.toString(),
-          target: relate === "parent" ? thought.id.toString() : id.toString(),
-          style: { stroke: !thought.feelGood ? "#e93f33" : "#45aeee" },
-        });
+        const edgeId =
+          relate === "parent" ? `e${id}${thought.id}` : `e${thought.id}${id}`;
+        if (!addedEdgesIds.includes(edgeId)) {
+          const strokeColor = getStrokeColor(
+            thought.feelGood,
+            relate === "parent",
+            feelGood === true
+          );
+
+          edges.push({
+            id: edgeId,
+            source: relate === "parent" ? id.toString() : thought.id.toString(),
+            target: relate === "parent" ? thought.id.toString() : id.toString(),
+            style: { stroke: strokeColor },
+          });
+          addedEdgesIds.push(edgeId);
+        }
       }
 
       //   recursive
       if (thought?.solutions)
         for (let solution of thought.solutions) {
-          getNodeEdge(solution, thought.id, "parent");
+          getNodeEdge(solution, thought.id, thought.feelGood, "parent");
         }
       if (thought?.issues)
         for (let issue of thought.issues) {
-          getNodeEdge(issue, thought.id, "child");
+          getNodeEdge(issue, thought.id, thought.feelGood, "child");
         }
     }
   };
+
   getNodeEdge(thoughts);
   return { nodes, edges };
 };

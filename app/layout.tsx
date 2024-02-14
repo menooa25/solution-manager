@@ -4,7 +4,7 @@ import "./globals.css";
 import "reactflow/dist/style.css";
 import AuthSession from "./AuthSession";
 import Navbar from "./ui/navbar/Navbar";
-import ReactFlowProvider from "./ui/ReactFlowProvider";
+import ReactFlowProvider from "./ui/thoughts/ReactFlowProvider";
 import ThoughtsNodeProvider from "./ui/thoughts/ThoughtsNodeProvider";
 
 const vazirmatn = Vazirmatn({ subsets: ["arabic", "latin", "latin-ext"] });
