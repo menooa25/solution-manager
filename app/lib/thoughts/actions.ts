@@ -106,7 +106,7 @@ export const getAllRelatedThoughts = async (id: number) => {
   if (!userId) return [];
   return await prisma.thought.findUnique({
     where: { id, userId },
-    include: createNestedInclude(6),
+    include: createNestedInclude(7),
   });
 };
 

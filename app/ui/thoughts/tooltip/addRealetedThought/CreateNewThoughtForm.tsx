@@ -19,7 +19,7 @@ interface Props {
 const CreateNewThoughtForm = ({ id, type, onSubmited }: Props) => {
   const [loading, setLoading] = useState(false);
   const { setAddedNodeId } = useLocateNodeInIDChange();
-  const { fetchIssues } = useContext(ThoughtNodeContext);
+  const { fetchIssues, mainNodeId } = useContext(ThoughtNodeContext);
   const {
     register,
     handleSubmit,
@@ -38,7 +38,7 @@ const CreateNewThoughtForm = ({ id, type, onSubmited }: Props) => {
     );
     setLoading(false);
     onSubmited();
-    await fetchIssues(id);
+    await fetchIssues(+mainNodeId);
     setAddedNodeId(id.toString());
   };
   return (

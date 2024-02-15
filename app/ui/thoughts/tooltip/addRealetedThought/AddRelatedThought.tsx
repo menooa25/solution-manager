@@ -25,7 +25,7 @@ interface Props {
 const AddRelatedThought = ({ type, id, currentThoughtDescription }: Props) => {
   const { modalId, openModal, closeModal } = useModal();
   const { setAddedNodeId } = useLocateNodeInIDChange();
-  const { fetchIssues } = useContext(ThoughtNodeContext);
+  const { fetchIssues, mainNodeId } = useContext(ThoughtNodeContext);
   const [createNewOne, setCreateNewOne] = useState(true);
   const onSubmitFromExistedThought = async (thought: Thought) => {
     await createRelatedThought(
@@ -37,7 +37,7 @@ const AddRelatedThought = ({ type, id, currentThoughtDescription }: Props) => {
       thought.id
     );
     closeModal();
-    await fetchIssues(id);
+    await fetchIssues(+mainNodeId);
     setAddedNodeId(id.toString());
   };
   return (
