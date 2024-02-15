@@ -79,29 +79,34 @@ export const getIssuesWithSolution = async () => {
   return issues;
 };
 
+const createNestedInclude = (depth: number) => {
+  const createNestedRelation = (currDepth: number) => {
+    if (currDepth === depth) {
+      return true;
+    }
+
+    const nestedStructure: any = {};
+    nestedStructure.include = {
+      issues: createNestedRelation(currDepth + 1),
+      solutions: createNestedRelation(currDepth + 1),
+    };
+
+    return nestedStructure;
+  };
+
+  const include = {
+    issues: createNestedRelation(1),
+    solutions: createNestedRelation(1),
+  };
+
+  return include;
+};
 export const getAllRelatedThoughts = async (id: number) => {
   const userId = await getUserId();
   if (!userId) return [];
   return await prisma.thought.findUnique({
     where: { id, userId },
-    include: {
-      issues: {
-        include: {
-          solutions: {
-            where: { NOT: { id } },
-          },
-          issues: true,
-        },
-      },
-      solutions: {
-        include: {
-          issues: {
-            where: { NOT: { id } },
-          },
-          solutions: true,
-        },
-      },
-    },
+    include: createNestedInclude(6),
   });
 };
 
