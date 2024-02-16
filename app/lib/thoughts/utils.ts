@@ -84,6 +84,8 @@ export const extractNodesEdges = (thoughts: FetchedTypes) => {
 
           edges.push({
             id: edgeId,
+            deletable: true,
+            type: "ThoughtEdge",
             source:
               relatePosition === "parent"
                 ? relateId.toString()

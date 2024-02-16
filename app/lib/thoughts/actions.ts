@@ -139,3 +139,17 @@ export const renameThought = async (id: number, description: string) => {
     data: { description },
   });
 };
+
+export const deleteRelation = async (issueId: number, solutionId: number) => {
+  const userId = await getUserId();
+  if (!userId) return null;
+  await prisma.thought.update({
+    where: { id: issueId, userId },
+    data: { solutions: { disconnect: { id: solutionId } } },
+  });
+  await prisma.thought.update({
+    where: { id: solutionId, userId },
+    data: { issues: { disconnect: { id: issueId } } },
+  });
+  return;
+};
