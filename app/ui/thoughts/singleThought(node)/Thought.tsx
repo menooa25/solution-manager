@@ -45,7 +45,7 @@ const Thought = ({ data }: Props) => {
           onDoubleClick={() => setOnRename(true)}
           ref={btnRef}
           onScroll={onScroll}
-          className={"max-w-40 max-h-none overflow-auto " + btnClass}
+          className={"max-w-40 max-h-none overflow-auto no-scroll " + btnClass}
         >
           {data.description}
         </button>

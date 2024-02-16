@@ -10,7 +10,7 @@ const useNoScroll = (elemRef: any, itsParent = false) => {
     if (itsParent && childElem) elem = childElem;
     if (elem) {
       const newHeight = elem.scrollHeight + scrollPosition;
-      elem.style.height = `${newHeight + 3}px`;
+      elem.style.height = `${newHeight}px`;
     }
   }, [scrollPosition]);
   const onScroll = (e: any) => {
